@@ -45,6 +45,13 @@ spec:
         # The CCM is a "critical addon"
         - key: "CriticalAddonsOnly"
           operator: "Exists"
+          # This taint is set on all Nodes when an external CCM is used
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoSchedule
+        - key: node.kubernetes.io/unreachable
+          operator: Exists
+          effect: NoSchedule
       hostNetwork: true
       containers:
         - image: linode/linode-cloud-controller-manager:latest
